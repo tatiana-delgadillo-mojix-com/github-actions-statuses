@@ -9,9 +9,6 @@ inputs:
   remotetoken:  # token of the remote repository
     description: 'Github Token of the Remote Repository'
     required: true
-  commit:  #the pull request commit sha
-    description: 'This pull request commit SHA'
-    required: true
   previousstate:  
     description: 'The last step status'
     required: true   
@@ -23,5 +20,4 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.remotetoken }}
-    - ${{ inputs.commit }}
     - ${{ inputs.previousstate }}

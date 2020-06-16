@@ -2,5 +2,5 @@
 
 echo "Shell running with these variables: "
 echo "$INPUT_REMOTETOKEN"
-echo "$INPUT_COMMIT"
+echo "$GITHUB_SHA"
 echo "$INPUT_PREVIOUSSTATE"
