@@ -1,0 +1,27 @@
+name: 'Status Update'
+description: 'An opininionated way to update the status of a PR in a remote repository.'
+author: 'Miguel Callejas <miguel.callejas@mojix.com> | Migs'
+branding:
+  color: 'red'
+  icon: 'check-circle'
+
+inputs:
+  remotetoken:  # token of the remote repository
+    description: 'Github Token of the Remote Repository'
+    required: true
+  commit:  #the pull request commit sha
+    description: 'This pull request commit SHA'
+    required: true
+  previousstate:  
+    description: 'The last step status'
+    required: true   
+outputs:
+  status: # the triggered status to Github 
+    description: 'The status included in the trigger to Github'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.remotetoken }}
+    - ${{ inputs.commit }}
+    - ${{ inputs.previousstate }}

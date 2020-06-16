@@ -1,0 +1,5 @@
+version: "2.3"
+services:
+  action:
+    image: action/py:1
+    command: "abc"
