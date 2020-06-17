@@ -5,6 +5,7 @@ echo "Shell running with these variables: "
 echo "GITHUB SHA: $GITHUB_SHA"
 
 echo "Original: ${GITHUB_WORKSPACE} and sliced: ${GITHUB_WORKSPACE##*/}"
+printenv
 echo "GITHUB REPO: ${GITHUB_WORKSPACE##*/}"
 echo "PREV STATE: $INPUT_PREVIOUSSTATE"
 echo "INIT STATE: $INPUT_INIT"
