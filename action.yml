@@ -12,6 +12,9 @@ inputs:
   previousstate:  
     description: 'The last step status'
     required: true
+  upstream:  
+    description: 'The name of the remote repository'
+    required: true    
   init:
     description: 'Initial state when triggered build'
     required: true
@@ -25,4 +28,5 @@ runs:
   args:
     - ${{ inputs.remotetoken }}
     - ${{ inputs.previousstate }}
+    - ${{ inputs.upstream }}
     - ${{ inputs.init }}
