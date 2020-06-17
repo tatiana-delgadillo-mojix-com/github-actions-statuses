@@ -3,6 +3,8 @@
 echo "Shell running with these variables: "
 #echo "$INPUT_REMOTETOKEN"
 echo "GITHUB SHA: $GITHUB_SHA"
+
+echo "Original: ${GITHUB_WORKSPACE} and sliced: ${GITHUB_WORKSPACE##*/}"
 echo "GITHUB REPO: ${GITHUB_WORKSPACE##*/}"
 echo "PREV STATE: $INPUT_PREVIOUSSTATE"
 echo "INIT STATE: $INPUT_INIT"
