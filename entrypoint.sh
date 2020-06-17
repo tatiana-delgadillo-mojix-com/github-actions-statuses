@@ -1,25 +1,22 @@
 #!/bin/sh -l
 
 echo "Shell running with these variables: "
-#echo "$INPUT_REMOTETOKEN"
-echo "GITHUB SHA: $GITHUB_SHA"
 
-echo "Original: ${GITHUB_WORKSPACE} and sliced: ${GITHUB_WORKSPACE##*/}"
-printenv
-echo "GITHUB REPO: ${GITHUB_WORKSPACE##*/}"
+echo "GITHUB SHA: $GITHUB_SHA"
+echo "GITHUB REPO: ${GITHUB_REPOSITORY##*/}"
 echo "PREV STATE: $INPUT_PREVIOUSSTATE"
 echo "INIT STATE: $INPUT_INIT"
 echo "UPSTREAM: $UPSTREAM"
 
 go () {
     echo "Sending status!"
-    time curl --location --request POST "https://api.github.com/repos/$UPSTREAM/${GITHUB_WORKSPACE##*/}/statuses/$GITHUB_SHA" \
+    time curl --location --request POST "https://api.github.com/repos/$UPSTREAM/${GITHUB_REPOSITORY##*/}/statuses/$GITHUB_SHA" \
     --header 'Accept: application/vnd.github.antiope-preview+json' \
     --header "Authorization: Token $INPUT_REMOTETOKEN" \
     --header 'Content-Type: application/json' \
     --data-raw "{
     \"state\": \"$INPUT_PREVIOUSSTATE\",
-    \"target_url\": \"https://github.com/$UPSTREAM/${GITHUB_WORKSPACE##*/}/actions\",
+    \"target_url\": \"https://github.com/$UPSTREAM/${GITHUB_REPOSITORY##*/}/actions\",
     \"description\": \"${DESCRIPTION}\",
     \"context\": \"mojix/ci\"
     }"
