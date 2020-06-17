@@ -3,19 +3,20 @@
 echo "Shell running with these variables: "
 #echo "$INPUT_REMOTETOKEN"
 echo "GITHUB SHA: $GITHUB_SHA"
-echo "GITHUB REPO: $GITHUB_REPOSITORY"
+echo "GITHUB REPO: ${GITHUB_WORKSPACE##*/}"
 echo "PREV STATE: $INPUT_PREVIOUSSTATE"
 echo "INIT STATE: $INPUT_INIT"
+echo "UPSTREAM: $UPSTREAM"
 
 go () {
     echo "Sending status!"
-    time curl --location --request POST "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/$GITHUB_SHA" \
+    time curl --location --request POST "https://api.github.com/repos/$UPSTREAM/${GITHUB_WORKSPACE##*/}/statuses/$GITHUB_SHA" \
     --header 'Accept: application/vnd.github.antiope-preview+json' \
     --header "Authorization: Token $INPUT_REMOTETOKEN" \
     --header 'Content-Type: application/json' \
     --data-raw "{
     \"state\": \"$INPUT_PREVIOUSSTATE\",
-    \"target_url\": \"https://github.com/${GITHUB_REPOSITORY}/actions\",
+    \"target_url\": \"https://github.com/$UPSTREAM/${GITHUB_WORKSPACE##*/}/actions\",
     \"description\": \"${DESCRIPTION}\",
     \"context\": \"mojix/ci\"
     }"
