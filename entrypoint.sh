@@ -1,6 +1,26 @@
 #!/bin/sh -l
 
 echo "Shell running with these variables: "
-echo "$INPUT_REMOTETOKEN"
-echo "$GITHUB_SHA"
-echo "$INPUT_PREVIOUSSTATE"
+#echo "$INPUT_REMOTETOKEN"
+echo "GITHUB SHA: $GITHUB_SHA"
+echo "GITHUB REPO: $GITHUB_REPOSITORY"
+echo "PREV STATE: $INPUT_PREVIOUSSTATE"
+echo "INIT STATE: $INPUT_INIT"
+
+go () {
+    echo "Sending status!"
+    curl --location --request POST "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/$GITHUB_SHA" \
+    --header 'Accept: application/vnd.github.antiope-preview+json' \
+    --header "Authorization: Token $INPUT_REMOTETOKEN" \
+    --header 'Content-Type: application/json' \
+    --data-raw "{
+    \"state\": \"$INPUT_PREVIOUSSTATE\",
+    \"target_url\": \"https://github.com/${GITHUB_REPOSITORY}/actions\",
+    \"description\": \"${DESCRIPTION}\",
+    \"context\": \"mojix/ci\"
+    }"
+}
+
+if [ $INPUT_PREVIOUSSTATE == 'success' && $INPUT_INIT == 'false' ]; then export DESCRIPTION="The build succeeded!" && go;
+elif [ $INPUT_PREVIOUSSTATE == 'failure' && $INPUT_INIT == 'false' ]; then export DESCRIPTION="The build failed!" && go;
+elif [ $INPUT_INIT == 'true' ]; then export DESCRIPTION="The build is pending" && go; fi

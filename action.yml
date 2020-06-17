@@ -11,7 +11,10 @@ inputs:
     required: true
   previousstate:  
     description: 'The last step status'
-    required: true   
+    required: true
+  init:
+    description: 'Initial state when triggered build'
+    required: true
 outputs:
   status: # the triggered status to Github 
     description: 'The status included in the trigger to Github'
@@ -21,3 +24,4 @@ runs:
   args:
     - ${{ inputs.remotetoken }}
     - ${{ inputs.previousstate }}
+    - ${{ inputs.init }}
