@@ -10,7 +10,7 @@ echo "UPSTREAM: $UPSTREAM"
 
 go () {
 
-    echo "Sending status!"
+    echo "Sending status: $INPUT_PREVIOUSSTATE"
     time curl --location --request POST "https://api.github.com/repos/$UPSTREAM/${GITHUB_REPOSITORY##*/}/statuses/$GITHUB_SHA" \
     --header 'Accept: application/vnd.github.antiope-preview+json' \
     --header "Authorization: Token $INPUT_REMOTETOKEN" \
@@ -25,4 +25,4 @@ go () {
 
 if [ $INPUT_PREVIOUSSTATE == 'success' ] && [ $INPUT_INIT == 'false' ]; then export DESCRIPTION="The build succeeded!" && go;
 elif [ $INPUT_PREVIOUSSTATE == 'failure' ] && [ $INPUT_INIT == 'false' ]; then export DESCRIPTION="The build failed!" && go;
-elif [ $INPUT_INIT == 'true' ]; then export DESCRIPTION="The build is pending" && export INPUT_PREVIOUSSTATE='pending' go; fi
+elif [ $INPUT_INIT == 'true' ]; then export DESCRIPTION="The build is pending" && export INPUT_PREVIOUSSTATE='pending' && go; fi
