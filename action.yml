@@ -15,6 +15,7 @@ inputs:
   init:
     description: 'Initial state when triggered build'
     required: true
+    default: "false"
 outputs:
   status: # the triggered status to Github 
     description: 'The status included in the trigger to Github'
