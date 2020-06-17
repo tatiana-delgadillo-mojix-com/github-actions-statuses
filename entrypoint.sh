@@ -9,7 +9,7 @@ echo "INIT STATE: $INPUT_INIT"
 
 go () {
     echo "Sending status!"
-    curl --location --request POST "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/$GITHUB_SHA" \
+    time curl --location --request POST "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/$GITHUB_SHA" \
     --header 'Accept: application/vnd.github.antiope-preview+json' \
     --header "Authorization: Token $INPUT_REMOTETOKEN" \
     --header 'Content-Type: application/json' \
@@ -21,6 +21,6 @@ go () {
     }"
 }
 
-if [ $INPUT_PREVIOUSSTATE == 'success' && $INPUT_INIT == 'false' ]; then export DESCRIPTION="The build succeeded!" && go;
-elif [ $INPUT_PREVIOUSSTATE == 'failure' && $INPUT_INIT == 'false' ]; then export DESCRIPTION="The build failed!" && go;
+if [ $INPUT_PREVIOUSSTATE == 'success' ] && [ $INPUT_INIT == 'false' ]; then export DESCRIPTION="The build succeeded!" && go;
+elif [ $INPUT_PREVIOUSSTATE == 'failure' ] && [ $INPUT_INIT == 'false' ]; then export DESCRIPTION="The build failed!" && go;
 elif [ $INPUT_INIT == 'true' ]; then export DESCRIPTION="The build is pending" && go; fi
