@@ -2,10 +2,8 @@
 
 echo "Shell running with these variables: "
 
-echo "Printing all inbound arguments: $@"
+export TOKEN=$1
 echo "GITHUB SHA: $GITHUB_SHA"
-echo "GITHUB TOKEN: $GITHUB_TOKEN"
-echo "GITHUB TOKEN INPUT: $INPUT_GITHUB_TOKEN"
 echo "GITHUB REPO: ${GITHUB_REPOSITORY##*/}"
 echo "PREV STATE: $INPUT_PREVIOUSSTATE"
 echo "INIT STATE: $INPUT_INIT"
@@ -16,7 +14,7 @@ go () {
     echo "Sending status: $INPUT_PREVIOUSSTATE"
     time curl --location --request POST "https://api.github.com/repos/$UPSTREAM/${GITHUB_REPOSITORY##*/}/statuses/$GITHUB_SHA" \
     --header 'Accept: application/vnd.github.antiope-preview+json' \
-    --header "Authorization: Token $GITHUB_TOKEN" \
+    --header "Authorization: Token $TOKEN" \
     --header 'Content-Type: application/json' \
     --data-raw "{
     \"state\": \"$INPUT_PREVIOUSSTATE\",
