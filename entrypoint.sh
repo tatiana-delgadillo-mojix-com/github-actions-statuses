@@ -3,7 +3,8 @@
 echo "Shell running with these variables: "
 
 echo "GITHUB SHA: $GITHUB_SHA"
-echo "GITHUB TOKEN: $INPUT_REMOTETOKEN"
+echo "GITHUB TOKEN: $GITHUB_TOKEN"
+echo "GITHUB TOKEN INPUT: $INPUT_GITHUB_TOKEN"
 echo "GITHUB REPO: ${GITHUB_REPOSITORY##*/}"
 echo "PREV STATE: $INPUT_PREVIOUSSTATE"
 echo "INIT STATE: $INPUT_INIT"
@@ -14,7 +15,7 @@ go () {
     echo "Sending status: $INPUT_PREVIOUSSTATE"
     time curl --location --request POST "https://api.github.com/repos/$UPSTREAM/${GITHUB_REPOSITORY##*/}/statuses/$GITHUB_SHA" \
     --header 'Accept: application/vnd.github.antiope-preview+json' \
-    --header "Authorization: Token $INPUT_REMOTETOKEN" \
+    --header "Authorization: Token $GITHUB_TOKEN" \
     --header 'Content-Type: application/json' \
     --data-raw "{
     \"state\": \"$INPUT_PREVIOUSSTATE\",
