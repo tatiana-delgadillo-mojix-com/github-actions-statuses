@@ -2,6 +2,7 @@
 
 echo "Shell running with these variables: "
 
+echo "Printing all inbound arguments: $@"
 echo "GITHUB SHA: $GITHUB_SHA"
 echo "GITHUB TOKEN: $GITHUB_TOKEN"
 echo "GITHUB TOKEN INPUT: $INPUT_GITHUB_TOKEN"

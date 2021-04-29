@@ -26,8 +26,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
+    - ${{ inputs.remotetoken}}
     - ${{ inputs.previousstate }}
     - ${{ inputs.upstream }}
     - ${{ inputs.init }}
-  env:
-    GITHUB_TOKEN: $${{ inputs.remotetoken }}
