@@ -3,7 +3,7 @@
 echo "Shell running with these variables: "
 
 echo "GITHUB SHA: $GITHUB_SHA"
-echo "GITHUB TOKEN: $GITHUB_TOKEN"
+echo "GITHUB TOKEN: $INPUT_REMOTETOKEN"
 echo "GITHUB REPO: ${GITHUB_REPOSITORY##*/}"
 echo "PREV STATE: $INPUT_PREVIOUSSTATE"
 echo "INIT STATE: $INPUT_INIT"
